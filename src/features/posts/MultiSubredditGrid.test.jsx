@@ -103,11 +103,12 @@ describe('MultiSubredditGrid', () => {
   it('applies responsive grid classes', () => {
     const { container } = renderWithProviders(<MultiSubredditGrid />);
     
-    // Check for responsive grid classes
+    // Check for responsive grid classes: mobile (1 col), desktop (2 col), xl (3 col)
     const gridElement = container.querySelector('.grid');
     expect(gridElement).toBeTruthy();
     expect(gridElement.className).toMatch(/grid-cols-1/);
-    expect(gridElement.className).toMatch(/md:grid-cols-2/);
+    expect(gridElement.className).toMatch(/lg:grid-cols-2/);
+    expect(gridElement.className).toMatch(/xl:grid-cols-3/);
   });
 
   it('handles errors gracefully for individual subreddits', async () => {

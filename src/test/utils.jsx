@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { redditApi } from '../app/api/redditApi';
 import uiReducer from '../features/ui/uiSlice';
+import searchReducer from '../features/search/searchSlice';
 
 /**
  * Custom render function that includes Redux store provider
@@ -23,6 +24,7 @@ export function renderWithProviders(
       reducer: {
         [redditApi.reducerPath]: redditApi.reducer,
         ui: uiReducer,
+        search: searchReducer,
       },
       middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(redditApi.middleware),
@@ -49,6 +51,7 @@ export function setupStore(preloadedState = {}) {
     reducer: {
       [redditApi.reducerPath]: redditApi.reducer,
       ui: uiReducer,
+      search: searchReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(redditApi.middleware),

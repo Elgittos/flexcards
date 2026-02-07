@@ -66,7 +66,7 @@ const PostCard = ({ post, viewMode = 'card', onClick }) => {
 
   return (
     <article
-      className={`bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] ${cardClasses}`}
+      className={`bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] ${cardClasses}`}
       onClick={handleClick}
       role="button"
       tabIndex={0}
@@ -100,15 +100,15 @@ const PostCard = ({ post, viewMode = 'card', onClick }) => {
       )}
 
       {/* Content */}
-      <div className={`p-4 flex-1 ${viewMode === 'compact' ? 'ml-3' : ''}`}>
+      <div className={`p-3 sm:p-4 flex-1 ${viewMode === 'compact' ? 'ml-2 sm:ml-3' : ''}`}>
         {/* Title */}
-        <h3 className={`font-semibold text-gray-900 mb-2 line-clamp-2 ${viewMode === 'card' ? 'text-lg' : 'text-base'}`}>
+        <h3 className={`font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 ${viewMode === 'card' ? 'text-base sm:text-lg' : 'text-sm sm:text-base'}`}>
           {title}
         </h3>
 
         {/* Metadata */}
-        <div className="flex items-center text-sm text-gray-600 mb-2 flex-wrap gap-2">
-          <span className="font-medium text-orange-600">r/{subreddit}</span>
+        <div className="flex items-center text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-2 flex-wrap gap-1 sm:gap-2">
+          <span className="font-medium text-orange-600 dark:text-orange-400">r/{subreddit}</span>
           <span>•</span>
           <span>u/{author}</span>
           <span>•</span>
@@ -116,7 +116,7 @@ const PostCard = ({ post, viewMode = 'card', onClick }) => {
         </div>
 
         {/* Stats */}
-        <div className="flex items-center gap-4 text-sm text-gray-600">
+        <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
           <div className="flex items-center gap-1">
             <svg
               className="w-5 h-5 text-orange-500"

@@ -53,7 +53,7 @@ const Modal = ({ isOpen, onClose, children, ariaLabel = 'Modal' }) => {
           onClick={handleBackdropClick}
         >
           <motion.div
-            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white rounded-lg shadow-xl"
+            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl"
             role="dialog"
             aria-modal="true"
             aria-label={ariaLabel}
@@ -65,7 +65,7 @@ const Modal = ({ isOpen, onClose, children, ariaLabel = 'Modal' }) => {
           >
             {/* Close button */}
             <button
-              className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors z-10"
+              className="absolute top-2 right-2 sm:top-4 sm:right-4 p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors z-10"
               onClick={onClose}
               aria-label="Close modal"
             >
