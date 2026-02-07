@@ -1,0 +1,23 @@
+ICON PLACEHOLDER
+================
+This is a placeholder for a 512x512 pixel app icon for the Reddit Client PWA.
+
+SPECIFICATIONS:
+- Size: 512x512 pixels
+- Format: PNG
+- Background: Reddit orange (#FF4500)
+- Icon: White symbol (e.g., antenna/alien or "R" letter)
+- Purpose: App icon for PWA installation (high resolution)
+
+CREATION INSTRUCTIONS:
+1. Create a 512x512 pixel PNG image
+2. Use Reddit brand color (#FF4500) as background
+3. Add a simple white icon or letter in the center
+4. Save as icon-512.png in the public/ directory
+
+You can use online tools like:
+- Figma, Canva, or Adobe Express for design
+- SVG to PNG converters
+- Favicon generators
+
+OR use a simple data URI approach for quick testing.
