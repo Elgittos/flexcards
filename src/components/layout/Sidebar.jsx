@@ -53,7 +53,10 @@ function Sidebar() {
       </AnimatePresence>
 
       {/* Desktop Sidebar - Always visible on large screens */}
-      <aside className="hidden lg:block w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 min-h-screen sticky top-16">
+      <aside 
+        data-testid="sidebar"
+        className="hidden lg:block w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 min-h-screen sticky top-16"
+      >
         <SidebarContent />
       </aside>
 
@@ -107,7 +110,7 @@ function SidebarContent() {
             <div key={categoryKey}>
               <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
                 {category.label}
-              </h3>
+              </h3> data-testid="subreddit-item"
               <ul className="space-y-1">
                 {category.subreddits.map((subreddit) => (
                   <li key={subreddit}>

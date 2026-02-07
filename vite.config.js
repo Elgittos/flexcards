@@ -105,5 +105,27 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
+    // Code splitting and chunk optimization
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Vendor chunks for better caching
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'redux-vendor': ['@reduxjs/toolkit', 'react-redux'],
+          'animation-vendor': ['framer-motion'],
+          'markdown-vendor': ['react-markdown', 'remark-gfm', 'rehype-sanitize'],
+          'utils-vendor': ['date-fns', 'clsx'],
+        },
+      },
+    },
+    // Optimize chunk size
+    chunkSizeWarningLimit: 1000,
+    // Minify for production
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove console.logs in production
+      },
+    },
   },
 });

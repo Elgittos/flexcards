@@ -21,6 +21,7 @@ const PostSkeleton = ({ count = 6, viewMode = 'card' }) => {
       {skeletons.map((index) => (
         <div
           key={index}
+          data-testid="post-skeleton"
           className={`bg-white rounded-lg shadow-md overflow-hidden ${cardClasses}`}
         >
           {/* Thumbnail skeleton */}

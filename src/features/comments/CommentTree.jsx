@@ -19,7 +19,7 @@ const CommentTree = ({ comments, isLoading = false, error = null, darkMode = fal
 
   if (isLoading) {
     return (
-      <div className="p-4 text-center">
+      <div className="p-4 text-center" data-testid="comment-skeleton">
         <p className="text-gray-500">Loading comments...</p>
       </div>
     );

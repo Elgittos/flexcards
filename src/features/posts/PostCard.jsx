@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../ui/uiSlice';
 import { formatTimeAgo } from '../../utils/formatDate';
+import LazyImage from '../../components/common/LazyImage';
 
 /**
  * Format large numbers with k/m suffix
@@ -66,6 +67,7 @@ const PostCard = ({ post, viewMode = 'card', onClick }) => {
 
   return (
     <article
+      data-testid="post-card"
       className={`bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] ${cardClasses}`}
       onClick={handleClick}
       role="button"
@@ -78,7 +80,7 @@ const PostCard = ({ post, viewMode = 'card', onClick }) => {
     >
       {/* Thumbnail */}
       {hasThumbnail ? (
-        <img
+        <LazyImage
           src={thumbnail}
           alt="Post thumbnail"
           className={thumbnailClasses}
@@ -110,7 +112,7 @@ const PostCard = ({ post, viewMode = 'card', onClick }) => {
         <div className="flex items-center text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-2 flex-wrap gap-1 sm:gap-2">
           <span className="font-medium text-orange-600 dark:text-orange-400">r/{subreddit}</span>
           <span>•</span>
-          <span>u/{author}</span>
+          <span data-testid="post-author">u/{author}</span>
           <span>•</span>
           <span>{formatTimeAgo(created)}</span>
         </div>
@@ -129,7 +131,7 @@ const PostCard = ({ post, viewMode = 'card', onClick }) => {
                 clipRule="evenodd"
               />
             </svg>
-            <span className="font-semibold">{formatNumber(score)}</span>
+            <span data-testid="post-score" className="font-semibold">{formatNumber(score)}</span>
           </div>
 
           <div className="flex items-center gap-1">
