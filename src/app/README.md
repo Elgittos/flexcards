@@ -19,30 +19,27 @@ import { store } from './app/store';
 // Store is provided to the app in main.jsx via <Provider>
 ```
 
-### api/apiSlice.js
-The RTK Query base API configuration.
+### api/redditApi.js
+The RTK Query API configuration for Reddit API integration.
 
 **Key Features:**
-- Centralized API configuration with `createApi`
-- Configurable base URL via environment variable `VITE_API_BASE_URL`
-- Tag-based cache invalidation system
+- Centralized Reddit API configuration with `createApi`
+- Base URL: `https://www.reddit.com`
+- Tag-based cache invalidation system with types: Posts, Post, Comments, Subreddit
+- User-Agent header automatically set to 'RedditClient/1.0'
 - Automatic request/response handling
 
 **Usage:**
-Feature-specific API endpoints can inject into this base API or be defined separately:
+Feature-specific endpoints can inject into this base API:
 ```javascript
-import { apiSlice } from '@/app/api/apiSlice';
+import { redditApi } from '@/app/api/redditApi';
 
-export const usersApi = apiSlice.injectEndpoints({
+export const postsApi = redditApi.injectEndpoints({
   endpoints: (builder) => ({
-    getUsers: builder.query({
-      query: () => '/users',
-      providesTags: ['User'],
+    getPosts: builder.query({
+      query: (subreddit) => `/${subreddit}.json`,
+      providesTags: ['Posts'],
     }),
   }),
 });
 ```
-
-## Environment Variables
-
-- `VITE_API_BASE_URL` - Base URL for API requests (defaults to JSONPlaceholder for development)

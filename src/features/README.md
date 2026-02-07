@@ -42,29 +42,25 @@ export default featureSlice.reducer;
 
 ### RTK Query API Slice (Server State)
 
-For server data fetching and caching, inject endpoints into the base API:
+For server data fetching and caching, inject endpoints into the Reddit API:
 
 ```javascript
-import { apiSlice } from '@/app/api/apiSlice';
+import { redditApi } from '@/app/api/redditApi';
 
-export const featureApi = apiSlice.injectEndpoints({
+export const postsApi = redditApi.injectEndpoints({
   endpoints: (builder) => ({
-    getItems: builder.query({
-      query: () => '/items',
-      providesTags: ['Item'],
+    getPosts: builder.query({
+      query: (subreddit) => `/${subreddit}.json`,
+      providesTags: ['Posts'],
     }),
-    createItem: builder.mutation({
-      query: (item) => ({
-        url: '/items',
-        method: 'POST',
-        body: item,
-      }),
-      invalidatesTags: ['Item'],
+    getPost: builder.query({
+      query: ({ subreddit, postId }) => `/${subreddit}/comments/${postId}.json`,
+      providesTags: ['Post', 'Comments'],
     }),
   }),
 });
 
-export const { useGetItemsQuery, useCreateItemMutation } = featureApi;
+export const { useGetPostsQuery, useGetPostQuery } = postsApi;
 ```
 
 ## Example

@@ -1,12 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { apiSlice } from './api/apiSlice';
-import exampleReducer from '../features/example/exampleSlice';
+import { redditApi } from './api/redditApi';
 
 export const store = configureStore({
   reducer: {
-    [apiSlice.reducerPath]: apiSlice.reducer,
-    example: exampleReducer,
+    [redditApi.reducerPath]: redditApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
+    getDefaultMiddleware().concat(redditApi.middleware),
 });
