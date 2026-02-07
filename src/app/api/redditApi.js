@@ -4,6 +4,60 @@ import {
   transformSearchResults,
   transformPostWithComments,
 } from '../../utils/redditHelpers';
+import { shouldRetry, getRetryAfter } from '../../utils/errors';
+
+/**
+ * Base query with retry logic for Reddit API
+ * Handles 429 rate limits and 5xx server errors with exponential backoff
+ */
+const baseQuery = fetchBaseQuery({
+  baseUrl: 'https://www.reddit.com',
+  prepareHeaders: (headers) => {
+    // Reddit requires a User-Agent header
+    headers.set('User-Agent', 'RedditClient/1.0');
+    return headers;
+  },
+});
+
+/**
+ * Base query wrapper with retry logic
+ * Implements exponential backoff: 1s, 2s, 4s, 8s (max 3 retries)
+ */
+const baseQueryWithRetry = async (args, api, extraOptions) => {
+  const maxRetries = 3;
+  
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    const result = await baseQuery(args, api, extraOptions);
+    
+    // If successful or no error, return result
+    if (!result.error) {
+      return result;
+    }
+    
+    // Check if we should retry
+    if (!shouldRetry(result.error, attempt, maxRetries)) {
+      return result;
+    }
+    
+    // Calculate delay for retry
+    let delay;
+    
+    // For 429 errors, use Retry-After header if available
+    if (result.error.status === 429 && result.meta?.response) {
+      const retryAfter = getRetryAfter(result.meta.response);
+      delay = retryAfter || Math.pow(2, attempt) * 1000;
+    } else {
+      // Exponential backoff: 1s, 2s, 4s, 8s
+      delay = Math.pow(2, attempt) * 1000;
+    }
+    
+    // Wait before retrying
+    await new Promise(resolve => setTimeout(resolve, delay));
+  }
+  
+  // This shouldn't be reached, but return last result as fallback
+  return await baseQuery(args, api, extraOptions);
+};
 
 /**
  * Reddit API configuration using RTK Query
@@ -18,14 +72,7 @@ import {
  */
 export const redditApi = createApi({
   reducerPath: 'redditApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://www.reddit.com',
-    prepareHeaders: (headers) => {
-      // Reddit requires a User-Agent header
-      headers.set('User-Agent', 'RedditClient/1.0');
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithRetry,
   tagTypes: ['Posts', 'Post', 'Comments', 'Subreddit'],
   endpoints: (builder) => ({
     /**

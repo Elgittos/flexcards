@@ -241,11 +241,12 @@ describe('PostList', () => {
       </Provider>
     );
 
+    // Wait longer for error to appear after retry attempts
     await waitFor(() => {
       expect(screen.getByText(/error loading posts/i)).toBeInTheDocument();
-    });
+    }, { timeout: 10000 });
 
     expect(screen.getByRole('button', { name: /try again/i })).toBeInTheDocument();
-  });
+  }, 15000); // Increase test timeout to allow for retries
 });
 
