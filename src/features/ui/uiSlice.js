@@ -13,6 +13,7 @@ const initialState = {
   sidebarOpen: false,      // Mobile sidebar state
   modalOpen: false,        // Post detail modal state
   selectedPostId: null,    // For modal view
+  selectedPostSubreddit: null, // Subreddit of selected post
 };
 
 const uiSlice = createSlice({
@@ -59,11 +60,12 @@ const uiSlice = createSlice({
 
     /**
      * Open post detail modal
-     * @param {Object} action - Action with payload: post ID
+     * @param {Object} action - Action with payload: { postId, subreddit }
      */
     openModal: (state, action) => {
       state.modalOpen = true;
-      state.selectedPostId = action.payload;
+      state.selectedPostId = action.payload.postId;
+      state.selectedPostSubreddit = action.payload.subreddit;
     },
 
     /**
@@ -72,6 +74,7 @@ const uiSlice = createSlice({
     closeModal: (state) => {
       state.modalOpen = false;
       state.selectedPostId = null;
+      state.selectedPostSubreddit = null;
     },
   },
 });
@@ -95,6 +98,7 @@ export const selectActiveSortOption = (state) => state.ui.activeSortOption;
 export const selectSidebarOpen = (state) => state.ui.sidebarOpen;
 export const selectModalOpen = (state) => state.ui.modalOpen;
 export const selectSelectedPostId = (state) => state.ui.selectedPostId;
+export const selectSelectedPostSubreddit = (state) => state.ui.selectedPostSubreddit;
 
 // Export reducer
 export default uiSlice.reducer;

@@ -14,6 +14,7 @@ import uiReducer, {
   selectSidebarOpen,
   selectModalOpen,
   selectSelectedPostId,
+  selectSelectedPostSubreddit,
 } from './uiSlice';
 
 describe('uiSlice', () => {
@@ -25,6 +26,7 @@ describe('uiSlice', () => {
     sidebarOpen: false,
     modalOpen: false,
     selectedPostId: null,
+    selectedPostSubreddit: null,
   };
 
   describe('reducers', () => {
@@ -64,9 +66,10 @@ describe('uiSlice', () => {
     });
 
     it('should handle openModal', () => {
-      const actual = uiReducer(initialState, openModal('abc123'));
+      const actual = uiReducer(initialState, openModal({ postId: 'abc123', subreddit: 'javascript' }));
       expect(actual.modalOpen).toBe(true);
       expect(actual.selectedPostId).toBe('abc123');
+      expect(actual.selectedPostSubreddit).toBe('javascript');
     });
 
     it('should handle closeModal', () => {
@@ -74,10 +77,12 @@ describe('uiSlice', () => {
         ...initialState,
         modalOpen: true,
         selectedPostId: 'abc123',
+        selectedPostSubreddit: 'javascript',
       };
       const actual = uiReducer(stateWithModal, closeModal());
       expect(actual.modalOpen).toBe(false);
       expect(actual.selectedPostId).toBe(null);
+      expect(actual.selectedPostSubreddit).toBe(null);
     });
   });
 
@@ -91,6 +96,7 @@ describe('uiSlice', () => {
         sidebarOpen: true,
         modalOpen: true,
         selectedPostId: 'xyz789',
+        selectedPostSubreddit: 'python',
       },
     };
 
@@ -120,6 +126,10 @@ describe('uiSlice', () => {
 
     it('selectSelectedPostId should return selectedPostId state', () => {
       expect(selectSelectedPostId(mockState)).toBe('xyz789');
+    });
+
+    it('selectSelectedPostSubreddit should return selectedPostSubreddit state', () => {
+      expect(selectSelectedPostSubreddit(mockState)).toBe('python');
     });
   });
 });

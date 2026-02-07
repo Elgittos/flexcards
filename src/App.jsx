@@ -1,15 +1,23 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useAppSelector } from './hooks/useAppSelector';
 import { selectIsSearching } from './features/search/searchSlice';
+import { selectModalOpen, selectSelectedPostId, selectSelectedPostSubreddit, closeModal } from './features/ui/uiSlice';
 import SortSelector from './features/posts/SortSelector';
 import PopularSubreddits from './features/subreddits/PopularSubreddits';
 import MultiSubredditGrid from './features/posts/MultiSubredditGrid';
 import SearchBar from './features/search/SearchBar';
 import SearchFilters from './features/search/SearchFilters';
 import SearchResults from './features/search/SearchResults';
+import Modal from './components/common/Modal';
+import PostDetail from './features/posts/PostDetail';
 
 function App() {
+  const dispatch = useDispatch();
   const isSearching = useAppSelector(selectIsSearching);
+  const modalOpen = useAppSelector(selectModalOpen);
+  const selectedPostId = useAppSelector(selectSelectedPostId);
+  const selectedPostSubreddit = useAppSelector(selectSelectedPostSubreddit);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -70,6 +78,20 @@ function App() {
           )}
         </div>
       </main>
+
+      {/* Post Detail Modal */}
+      <Modal 
+        isOpen={modalOpen} 
+        onClose={() => dispatch(closeModal())}
+        ariaLabel="Post Details"
+      >
+        {selectedPostId && selectedPostSubreddit && (
+          <PostDetail 
+            postId={selectedPostId}
+            subreddit={selectedPostSubreddit}
+          />
+        )}
+      </Modal>
     </div>
   );
 }

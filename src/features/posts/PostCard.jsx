@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../ui/uiSlice';
 import { formatTimeAgo } from '../../utils/formatDate';
 
 /**
@@ -22,6 +24,7 @@ const formatNumber = (num) => {
  * Displays an individual Reddit post in card or compact view
  */
 const PostCard = ({ post, viewMode = 'card', onClick }) => {
+  const dispatch = useDispatch();
   const {
     id,
     title,
@@ -43,6 +46,9 @@ const PostCard = ({ post, viewMode = 'card', onClick }) => {
   const handleClick = () => {
     if (onClick) {
       onClick(post);
+    } else {
+      // Open modal with post details
+      dispatch(openModal({ postId: id, subreddit }));
     }
   };
 
