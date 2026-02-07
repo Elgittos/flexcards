@@ -21,6 +21,9 @@ export default [
         navigator: 'readonly',
         console: 'readonly',
         process: 'readonly',
+        URLSearchParams: 'readonly',
+        URL: 'readonly',
+        __dirname: 'readonly',
       },
     },
     plugins: {
