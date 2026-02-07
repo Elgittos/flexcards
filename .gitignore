@@ -1,0 +1,93 @@
+############################
+# 🔐 Secrets & credentials
+############################
+.env
+.env.*
+secrets/
+*.key
+*.pem
+
+############################
+# 🤖 AI / Agent runtimes
+# (generated, NEVER commit)
+############################
+ai/
+agents/
+crew/
+crewai/
+workspace/
+memory/
+knowledge/
+outputs/
+logs/
+runs/
+sessions/
+
+############################
+# 🐍 Python
+############################
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+
+############################
+# 🟦 Node / JS / TS
+############################
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+build/
+.next/
+out/
+
+############################
+# 🐳 Docker
+############################
+.dockerignore
+docker-data/
+docker-volumes/
+*.log
+
+############################
+# 🧠 Copilot / LLM tooling
+############################
+.copilot/
+.copilot-workspace/
+.llm_cache/
+.prompt_cache/
+
+############################
+# 🧰 VS Code (Insiders)
+############################
+.vscode/
+.vscode-insiders/
+.history/
+*.code-workspace
+
+############################
+# 💻 OS / misc
+############################
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+*.bak
+.cache/
+
+############################
+# 📄 Generated artifacts
+############################
+*.sqlite
+*.db
+*.jsonl
+*.parquet
