@@ -63,10 +63,12 @@ export const redditApi = createApi({
      * @param {string} [params.subreddit] - Subreddit to search in (optional, searches globally if omitted)
      * @param {number} [params.limit=25] - Number of results to fetch
      * @param {string} [params.after] - Pagination cursor for next page
+     * @param {string} [params.sort] - Sort option: relevance, hot, top, new, comments
+     * @param {string} [params.t] - Time filter: hour, day, week, month, year, all
      * @returns {Object} Transformed search results with pagination info
      */
     searchPosts: builder.query({
-      query: ({ query, subreddit, limit = 25, after }) => {
+      query: ({ query, subreddit, limit = 25, after, sort, t }) => {
         const params = new URLSearchParams({
           q: query,
           limit: limit.toString(),
@@ -75,6 +77,14 @@ export const redditApi = createApi({
         
         if (after) {
           params.append('after', after);
+        }
+        
+        if (sort) {
+          params.append('sort', sort);
+        }
+        
+        if (t) {
+          params.append('t', t);
         }
         
         // If subreddit is provided, search within that subreddit

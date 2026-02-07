@@ -308,6 +308,114 @@ describe('redditApi endpoints', () => {
       expect(result.data).toBeDefined();
       expect(result.data.after).toBeDefined();
     });
+
+    it('should accept sort parameter and add it to query string', async () => {
+      // Setup server to capture the request
+      let capturedUrl;
+      server.use(
+        http.get('https://www.reddit.com/search.json', ({ request }) => {
+          capturedUrl = new URL(request.url);
+          return HttpResponse.json(mockSearchResults);
+        })
+      );
+
+      await store.dispatch(
+        redditApi.endpoints.searchPosts.initiate({
+          query: 'test',
+          sort: 'top',
+          limit: 25,
+        })
+      );
+
+      expect(capturedUrl.searchParams.get('sort')).toBe('top');
+    });
+
+    it('should accept time filter parameter and add it to query string', async () => {
+      // Setup server to capture the request
+      let capturedUrl;
+      server.use(
+        http.get('https://www.reddit.com/search.json', ({ request }) => {
+          capturedUrl = new URL(request.url);
+          return HttpResponse.json(mockSearchResults);
+        })
+      );
+
+      await store.dispatch(
+        redditApi.endpoints.searchPosts.initiate({
+          query: 'test',
+          t: 'week',
+          limit: 25,
+        })
+      );
+
+      expect(capturedUrl.searchParams.get('t')).toBe('week');
+    });
+
+    it('should accept both sort and time filter parameters', async () => {
+      // Setup server to capture the request
+      let capturedUrl;
+      server.use(
+        http.get('https://www.reddit.com/r/javascript/search.json', ({ request }) => {
+          capturedUrl = new URL(request.url);
+          return HttpResponse.json(mockSearchResults);
+        })
+      );
+
+      await store.dispatch(
+        redditApi.endpoints.searchPosts.initiate({
+          query: 'react hooks',
+          subreddit: 'javascript',
+          sort: 'top',
+          t: 'month',
+          limit: 25,
+        })
+      );
+
+      expect(capturedUrl.searchParams.get('sort')).toBe('top');
+      expect(capturedUrl.searchParams.get('t')).toBe('month');
+    });
+
+    it('should not add sort parameter if not provided', async () => {
+      // Setup server to capture the request
+      let capturedUrl;
+      server.use(
+        http.get('https://www.reddit.com/search.json', ({ request }) => {
+          capturedUrl = new URL(request.url);
+          return HttpResponse.json(mockSearchResults);
+        })
+      );
+
+      await store.dispatch(
+        redditApi.endpoints.searchPosts.initiate({
+          query: 'test-no-sort-param',
+          limit: 25,
+        })
+      );
+
+      expect(capturedUrl).toBeDefined();
+      expect(capturedUrl.searchParams.get('sort')).toBeNull();
+    });
+
+    it('should not add time filter parameter if not provided', async () => {
+      // Setup server to capture the request
+      let capturedUrl;
+      server.use(
+        http.get('https://www.reddit.com/search.json', ({ request }) => {
+          capturedUrl = new URL(request.url);
+          return HttpResponse.json(mockSearchResults);
+        })
+      );
+
+      await store.dispatch(
+        redditApi.endpoints.searchPosts.initiate({
+          query: 'test-no-time-param',
+          limit: 25,
+        })
+      );
+
+      expect(capturedUrl).toBeDefined();
+      expect(capturedUrl.searchParams.get('t')).toBeNull();
+    });
   });
 
   describe('getPostWithComments', () => {
