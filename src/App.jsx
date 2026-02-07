@@ -1,5 +1,7 @@
 import React from 'react';
-import PostList from './features/posts/PostList';
+import SortSelector from './features/posts/SortSelector';
+import PopularSubreddits from './features/subreddits/PopularSubreddits';
+import MultiSubredditGrid from './features/posts/MultiSubredditGrid';
 
 function App() {
   return (
@@ -23,7 +25,19 @@ function App() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-6">
-        <PostList />
+        <div className="space-y-6">
+          {/* Sort Selector */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+            <h2 className="text-lg font-semibold text-gray-900 mb-3">Sort Posts</h2>
+            <SortSelector />
+          </div>
+
+          {/* Popular Subreddits Navigation */}
+          <PopularSubreddits />
+
+          {/* Multi-Subreddit Grid */}
+          <MultiSubredditGrid />
+        </div>
       </main>
     </div>
   );
